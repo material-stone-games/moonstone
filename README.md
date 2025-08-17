@@ -37,3 +37,10 @@ Assets/
 ## Hierarchy Customization
 
 You can customize hierarchy in Editor in Tools > Moonstone > Hierarchy Customization > Edit Settings.
+
+## Scripts
+
+- Core
+  - ServiceLocator
+  - Managers
+  - Systems
