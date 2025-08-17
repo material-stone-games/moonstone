@@ -1,2 +1,3 @@
 # moonstone
-A lightweight reusable Unity package
+
+A lightweight reusable Unity package.

@@ -1,0 +1,13 @@
+{
+    "name": "com.materialstone.moonstone",
+    "version": "0.1.0",
+    "displayName": "Moonstone",
+    "description": "A lightweight reusable Unity package.",
+    "unity": "2023.1",
+    "author": {
+        "name": "Material Stone Games",
+        "email": "materialstonegames@gmail.com",
+        "url": "https://github.com/material-stone-games"
+    },
+    "dependencies": {}
+}
