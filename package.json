@@ -1,6 +1,6 @@
 {
     "name": "com.materialstone.moonstone",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "displayName": "Moonstone",
     "description": "A lightweight reusable Unity package.",
     "unity": "2023.1",
