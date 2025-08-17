@@ -7,7 +7,7 @@ namespace Moonstone
 {
     public class SetupWindow : EditorWindow
     {
-        [MenuItem("Window/MaterialStone/Project Setup")]
+        [MenuItem("Window/Moonstone/Project Setup")]
         public static void ShowWindow()
         {
             GetWindow<SetupWindow>("Project Setup");
@@ -15,10 +15,10 @@ namespace Moonstone
 
         private void OnGUI()
         {
-            GUILayout.Label("프로젝트 템플릿 셋업", EditorStyles.boldLabel);
+            GUILayout.Label("Project Structure Template", EditorStyles.boldLabel);
             GUILayout.Space(10);
 
-            if (GUILayout.Button("템플릿 적용하기"))
+            if (GUILayout.Button("Apply"))
             {
                 ApplyTemplate();
             }
@@ -29,14 +29,14 @@ namespace Moonstone
             var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForPackageName(Constants.PACKAGE_NAME);
             if (packageInfo == null)
             {
-                Debug.LogError($"패키지를 찾을 수 없습니다: {Constants.PACKAGE_NAME}");
+                Debug.LogError($"Package not found: {Constants.PACKAGE_NAME}");
                 return;
             }
 
             string projectStructurePath = Path.Combine(packageInfo.resolvedPath, "Templates", "ProjectStructure");
             if (!Directory.Exists(projectStructurePath))
             {
-                Debug.LogError($"프로젝트 구조 폴더가 존재하지 않습니다: {projectStructurePath}");
+                Debug.LogError($"Project structure folder does not exist: {projectStructurePath}");
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace Moonstone
             CopyDirectory(projectStructurePath, targetPath);
             AssetDatabase.Refresh();
 
-            Debug.Log("템플릿 셋업 완료!");
+            Debug.Log("Complete applying project structure template!");
         }
 
         private void CopyDirectory(string sourceDir, string targetDir)
