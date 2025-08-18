@@ -29,14 +29,14 @@ namespace Moonstone
             var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForPackageName(Constants.PACKAGE_NAME);
             if (packageInfo == null)
             {
-                Debug.LogError($"Package not found: {Constants.PACKAGE_NAME}");
+                Debug.LogError($"❌ Package not found: {Constants.PACKAGE_NAME}");
                 return;
             }
 
             string projectStructurePath = Path.Combine(packageInfo.resolvedPath, "Templates", "ProjectStructure");
             if (!Directory.Exists(projectStructurePath))
             {
-                Debug.LogError($"Project structure folder does not exist: {projectStructurePath}");
+                Debug.LogError($"❌ Project structure folder does not exist: {projectStructurePath}");
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace Moonstone
             CopyDirectory(projectStructurePath, targetPath);
             AssetDatabase.Refresh();
 
-            Debug.Log("Complete applying project structure template!");
+            Debug.Log("✅ Complete applying project structure template!");
         }
 
         private void CopyDirectory(string sourceDir, string targetDir)
@@ -57,6 +57,14 @@ namespace Moonstone
                 string dirName = Path.GetFileName(directory);
                 string destDir = Path.Combine(targetDir, dirName);
                 CopyDirectory(directory, destDir);
+            }
+
+            foreach (string file in Directory.GetFiles(sourceDir))
+            {
+                string fileName = Path.GetFileName(file);
+                if (fileName.EndsWith(".meta") || fileName.Equals(".gitkeep")) { continue; }
+                string destFile = Path.Combine(targetDir, fileName);
+                File.Copy(file, destFile, true);
             }
         }
     }
