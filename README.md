@@ -38,6 +38,16 @@ Assets/
 
 You can customize hierarchy in Editor in Tools > Moonstone > Hierarchy Customization > Edit Settings.
 
+## UI Script Management
+
+You can manage UI scripts in Editor in Tools > Moonstone > UI Script Manager.
+
+Set your app name and output path.
+You can generate ui scripts for children of canvas.
+
+Press attach button to attach component of generated scripts to children of canvas.
+You can also detach that by pressing detach button.
+
 ## Scripts
 
 - Core
