@@ -44,3 +44,9 @@ You can customize hierarchy in Editor in Tools > Moonstone > Hierarchy Customiza
   - ServiceLocator
   - Managers
   - Systems
+
+- View
+  - UI
+    - View
+    - Screen
+    - Tab
