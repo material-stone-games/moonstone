@@ -84,9 +84,8 @@ namespace Moonstone.HierarchyCustomization
 
         static Separator FindSeparatorDataByName(string name)
         {
-            Separator result = Array.Find(data.separatorList, item => name.StartsWith(item.prefix));
-
-            return result;
+            if (data == null || data.separatorList == null) { return null; }
+            return Array.Find(data.separatorList, item => name.StartsWith(item.prefix));
         }
     }
 }
