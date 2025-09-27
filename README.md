@@ -16,7 +16,7 @@ Assets/
 ├── 02_Scripts/
 │   ├── Core/
 │   │   ├── Manager/
-│   │   └── System/
+│   │   └── Service/
 │   ├── Dev/
 │   ├── Model/
 │   └── View/

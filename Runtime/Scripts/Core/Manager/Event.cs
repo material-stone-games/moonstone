@@ -12,7 +12,7 @@ namespace Moonstone.Core.Manager
         {
             var type = typeof(TEnum);
             if (!eventTables.ContainsKey(type))
-                eventTables[type] = new();
+                eventTables[type] = new Dictionary<TEnum, List<IEventListener>>();
             return (Dictionary<TEnum, List<IEventListener>>)eventTables[type];
         }
 
@@ -20,7 +20,7 @@ namespace Moonstone.Core.Manager
         {
             var table = GetTable<TEnum>();
             if (!table.ContainsKey(type))
-                table[type] = new();
+                table[type] = new List<IEventListener>();
             table[type].Add(listener);
         }
 
