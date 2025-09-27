@@ -24,9 +24,21 @@ namespace Moonstone.HierarchyCustomization
 
         static HierarchyCustomizationData LoadSettings()
         {
-            var dataPath = $"Packages/{Constants.PACKAGE_NAME}/Editor/Data/{SETTING_FILENAME}.asset";
+            var dataPath = $"Assets/Settings/Data/{SETTING_FILENAME}.asset";
             var data = AssetDatabase.LoadAssetAtPath<HierarchyCustomizationData>(dataPath);
-
+            if (data == null)
+            {
+                var directory = System.IO.Path.GetDirectoryName(dataPath);
+                if (!System.IO.Directory.Exists(directory))
+                {
+                    System.IO.Directory.CreateDirectory(directory);
+                    AssetDatabase.Refresh();
+                }
+                data = ScriptableObject.CreateInstance<HierarchyCustomizationData>();
+                AssetDatabase.CreateAsset(data, dataPath);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
             return data;
         }
 
