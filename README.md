@@ -51,12 +51,14 @@ You can also detach that by pressing detach button.
 ## Scripts
 
 - Core
+  - Application
   - ServiceLocator
   - Managers
-  - Systems
+    - Event
+  - Services
 
 - View
   - UI
     - View
-    - Screen
+    - Scene
     - Tab

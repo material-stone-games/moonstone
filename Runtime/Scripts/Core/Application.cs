@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Moonstone.Core.Manager
+namespace Moonstone.Core
 {
     public enum ApplicationState
     {
@@ -13,10 +13,14 @@ namespace Moonstone.Core.Manager
         Exiting,
     }
 
-    public class Application : ManagerBase
+    public class Application : MonoBehaviour
     {
         [Header("Managers")]
-        [SerializeField] ManagerBase[] managers;
+        [SerializeField] Manager.ManagerBase[] managers;
+
+        [Header("Scenes")]
+        [SerializeField] View.UI.Scene[] scenes;
+        [SerializeField] bool activateFirstSceneOnStart = true;
 
         [Header("Events")]
         [SerializeField] UnityEvent onInitializedEvent;
@@ -49,6 +53,30 @@ namespace Moonstone.Core.Manager
             SetUp();
         }
 
+        void SetUp()
+        {
+            foreach (var manager in managers)
+            {
+                if (manager == null) { continue; }
+                manager.SetUp();
+            }
+
+            foreach (var scene in scenes)
+            {
+                if (scene == null) { continue; }
+                scene.SetUp();
+            }
+
+            if (activateFirstSceneOnStart && scenes.Length > 0 && scenes[0] != null)
+            {
+                for (int i = 1; i < scenes.Length; i++) { scenes[i]?.Hide(); }
+                scenes[0].Show();
+            }
+
+            State = ApplicationState.Running;
+            onStartUpEvent?.Invoke();
+        }
+
         void LateUpdate()
         {
             if (!isQuitReserved) { return; }
@@ -70,22 +98,16 @@ namespace Moonstone.Core.Manager
 #endif
         }
 
-        public override void SetUp()
-        {
-            foreach (var manager in managers)
-            {
-                if (manager == null) { continue; }
-                manager.SetUp();
-            }
-
-            State = ApplicationState.Running;
-            onStartUpEvent?.Invoke();
-        }
-
-        public override void TearDown()
+        void TearDown()
         {
             onQuitEvent?.Invoke();
             State = ApplicationState.Exiting;
+
+            foreach (var scene in scenes)
+            {
+                if (scene == null) { continue; }
+                scene.TearDown();
+            }
 
             foreach (var manager in managers)
             {

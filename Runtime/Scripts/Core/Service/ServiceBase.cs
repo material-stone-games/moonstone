@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Moonstone.Core.System
+namespace Moonstone.Core.Service
 {
-    public class SystemBase : MonoBehaviour
+    public class ServiceBase : MonoBehaviour, IService
     {
         protected virtual void Awake() => enabled = false;
 
