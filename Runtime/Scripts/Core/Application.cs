@@ -114,6 +114,10 @@ namespace Moonstone.Core
                 if (manager == null) { continue; }
                 manager.TearDown();
             }
+
+            ServiceLocator.Clear();
+
+            State = ApplicationState.None;
         }
 
         public void Quit()
@@ -122,6 +126,14 @@ namespace Moonstone.Core
             enabled = true;
 
             State = ApplicationState.PendingExit;
+        }
+
+        void OnDestroy()
+        {
+            if (State != ApplicationState.Exiting)
+            {
+                TearDown();
+            }
         }
     }
 }
