@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Moonstone.D3.Presentation
@@ -34,7 +33,7 @@ namespace Moonstone.D3.Presentation
         {
             foreach (var field in GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 if (Attribute.GetCustomAttribute(field, typeof(BindAttribute)) is BindAttribute bindAttr)
-                    if (field.GetValue(this) is View view && view != null)
+                    if (field.GetValue(this) is View view)
                         _views[bindAttr.Type] = view;
         }
 
@@ -52,16 +51,20 @@ namespace Moonstone.D3.Presentation
         public virtual void Initialize()
         {
             foreach (var view in GetComponentsInChildren<View>(true))
-                if (view != this)
+                if (view != this && view.IsUnityValid())
                     view.Initialize();
         }
 
         public virtual void Dispose()
         {
-            if (this.IsUnityNull()) return;
+            if (IsUnityNull()) return;
             foreach (var view in GetComponentsInChildren<View>(true))
-                if (view != this && !view.IsUnityNull())
+                if (view != this && view.IsUnityValid())
                     view.Dispose();
         }
+
+        private bool IsUnityNull() => this == null;
+
+        private bool IsUnityValid() => !(this == null);
     }
 }

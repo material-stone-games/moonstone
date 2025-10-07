@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using D3.Framework;
-using UnityEngine;
+using Moonstone.D3.Framework;
 
 namespace Moonstone.D3
 {
