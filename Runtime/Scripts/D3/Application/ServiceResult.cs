@@ -5,7 +5,6 @@ namespace Moonstone.D3.Application
     public class ServiceResult
     {
         public bool IsSuccess { get; }
-        public string ErrorMessage { get; }
         public System.Exception Exception { get; }
 
         public ServiceResult()
@@ -13,10 +12,9 @@ namespace Moonstone.D3.Application
             IsSuccess = true;
         }
 
-        public ServiceResult(string errorMessage, System.Exception exception)
+        public ServiceResult(System.Exception exception)
         {
             IsSuccess = false;
-            ErrorMessage = errorMessage;
             Exception = exception;
         }
 
@@ -28,7 +26,7 @@ namespace Moonstone.D3.Application
         }
 
         public static ServiceResult Success() => new();
-        public static ServiceResult Failure(string errorMessage, System.Exception ex) => new(errorMessage, ex);
+        public static ServiceResult Failure(System.Exception exception) => new(exception);
     }
 
     public class ServiceResult<TData>
