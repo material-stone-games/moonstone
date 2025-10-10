@@ -6,35 +6,29 @@ namespace Moonstone.D3.Application
     {
         public bool IsSuccess { get; }
         public string ErrorMessage { get; }
-        public string StackTrace { get; }
+        public System.Exception Exception { get; }
 
         public ServiceResult()
         {
             IsSuccess = true;
         }
 
-        public ServiceResult(string errorMessage)
+        public ServiceResult(string errorMessage, System.Exception exception)
         {
             IsSuccess = false;
             ErrorMessage = errorMessage;
-        }
-
-        public ServiceResult(System.Exception ex)
-        {
-            IsSuccess = false;
-            ErrorMessage = ex.Message;
-            StackTrace = ex.StackTrace;
+            Exception = exception;
         }
 
         public ServiceResult PrintError()
         {
             if (IsSuccess) return this;
-            Debug.LogError($"[{GetType().Name}]: {ErrorMessage}\n{StackTrace}");
+            Debug.LogException(Exception);
             return this;
         }
 
         public static ServiceResult Success() => new();
-        public static ServiceResult Failure(System.Exception ex) => new(ex);
+        public static ServiceResult Failure(string errorMessage, System.Exception ex) => new(errorMessage, ex);
     }
 
     public class ServiceResult<TData>
