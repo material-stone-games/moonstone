@@ -11,7 +11,7 @@ namespace Moonstone.D3
     public interface IEventHandler<in TEvent> : IEventHandler where TEvent : Event
     {
         Task Handle(TEvent @event);
-        
+
         async Task IEventHandler.Handle(Event @event)
         {
             if (@event is TEvent typedEvent)

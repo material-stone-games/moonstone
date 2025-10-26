@@ -53,10 +53,6 @@ namespace Moonstone.D3.Infrastructure
                 var rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
                 installer.Install(rootObjects);
             }
-            else
-            {
-                Debug.LogWarning("D3Settings ScriptableObject not found in the project.");
-            }
         }
     }
 }
