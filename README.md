@@ -1,4 +1,4 @@
-# moonstone
+# Moonstone
 
 A lightweight reusable Unity package.
 
@@ -14,24 +14,27 @@ Assets/
 ├── 01_Scenes/
 │   └── Template Scene.unity
 ├── 02_Scripts/
-│   ├── Core/
-│   │   ├── Manager/
-│   │   └── Service/
-│   ├── Dev/
+│   ├── Controller/
+│   ├── Data/
+│   ├── Event/
+│   ├── Factory/
 │   ├── Model/
-│   └── View/
-│       ├── UI/
-│       └── World/
+│   ├── Policy/
+│   ├── Repository/
+│   ├── View/
+│   │   ├── UI/
+│   │   └── World/
+│   └── ViewModel/
 ├── 03_Prefabs/
 ├── 04_Data/
-├── 05_Resources/
-│   ├── Animations/
-│   ├── Externals/
-│   ├── Fonts/
-│   ├── Materials/
-│   ├── Shaders/
-│   ├── Sounds/
-│   └── Sprites/
+└── 05_Resources/
+    ├── Animations/
+    ├── Externals/
+    ├── Fonts/
+    ├── Materials/
+    ├── Shaders/
+    ├── Sounds/
+    └── Sprites/
 ```
 
 ## Hierarchy Customization
@@ -50,18 +53,25 @@ You can also detach that by pressing detach button.
 
 ## Scripts
 
-- Core
-  - Application
-  - ServiceLocator
-  - Managers
-    - Event
-  - Services
-
-- View
-  - UI
-    - View
+- Arc
+  - Framework
+    - ArcSettings
+    - Installer
+    - ServiceResolver
+  - View
     - Scene
-    - Tab
+    - View
+  - Bootstrapper
+  - Container
+  - EventDispatcher
+  - Model
+  - Repository
+  - ViewModel
+
+- Lapidary
+  - View
+    - UI
+      - Tab
 
 - D3
   - Application

@@ -10,7 +10,7 @@ namespace Moonstone.UIScriptManagement
             foreach (Transform screenTransform in canvasRoot.transform)
             {
                 string screenName = UIScriptNameSanitizer.Sanitize(screenTransform.name);
-                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.Screen, Assembly-CSharp");
+                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.{screenName}Scene, Assembly-CSharp");
                 if (screenType == null) continue;
 
                 Component screenComp = screenTransform.gameObject.GetComponent(screenType);

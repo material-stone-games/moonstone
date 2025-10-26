@@ -16,7 +16,7 @@ namespace Moonstone.UIScriptManagement
             foreach (Transform screenTransform in canvasRoot.transform)
             {
                 string screenName = UIScriptNameSanitizer.Sanitize(screenTransform.name);
-                AttachScriptToGameObject($"{appName}.View.UI.{screenName}.Screen, Assembly-CSharp", screenTransform.gameObject);
+                AttachScriptToGameObject($"{appName}.View.UI.{screenName}.{screenName}Scene, Assembly-CSharp", screenTransform.gameObject);
 
                 foreach (Transform viewTransform in screenTransform)
                 {
@@ -43,7 +43,7 @@ namespace Moonstone.UIScriptManagement
             foreach (Transform screenTransform in canvasRoot.transform)
             {
                 string screenName = UIScriptNameSanitizer.Sanitize(screenTransform.name);
-                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.Screen, Assembly-CSharp");
+                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.{screenName}Scene, Assembly-CSharp");
                 if (screenType == null) continue;
 
                 Component screenComp = screenTransform.gameObject.GetComponent(screenType);
@@ -75,7 +75,7 @@ namespace Moonstone.UIScriptManagement
             foreach (Transform screenTransform in canvasRoot.transform)
             {
                 string screenName = UIScriptNameSanitizer.Sanitize(screenTransform.name);
-                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.Screen, Assembly-CSharp");
+                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.{screenName}Scene, Assembly-CSharp");
                 if (screenType == null) return false;
 
                 if (!screenTransform.TryGetComponent(screenType, out _))

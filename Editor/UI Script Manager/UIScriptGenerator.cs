@@ -15,13 +15,13 @@ namespace Moonstone.UIScriptManagement
             {
                 string screenName = screen.name.Replace(" ", "");
                 string screenFolder = Path.Combine(targetPath, screenName);
-                string screenFile = Path.Combine(screenFolder, "Screen.cs");
+                string screenFile = Path.Combine(screenFolder, $"{screenName}Scene.cs");
 
                 // 1-depth Screen
                 string screenCode =
     $@"namespace {appName}.View.UI.{screenName}
 {{
-    public class Screen : Moonstone.View.UI.Screen
+    public class {screenName}Scene : Moonstone.Arc.Scene
     {{
 {GenerateChildFields(screen)}
     }}
@@ -38,7 +38,7 @@ namespace Moonstone.UIScriptManagement
                     string viewCode =
     $@"namespace {appName}.View.UI.{screenName}
 {{
-    public class {viewName} : Moonstone.View.UI.View {{
+    public class {viewName} : Moonstone.Arc.View {{
 
     }}
 }}";
@@ -66,7 +66,7 @@ namespace Moonstone.UIScriptManagement
             {
                 var screenName = UIScriptNameSanitizer.Sanitize(screenTransform.name);
 
-                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.Screen, Assembly-CSharp");
+                Type screenType = Type.GetType($"{appName}.View.UI.{screenName}.{screenName}Scene, Assembly-CSharp");
                 if (screenType == null) return false;
 
                 foreach (Transform viewTransform in screenTransform)
