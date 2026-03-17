@@ -14,17 +14,6 @@ Assets/
 ├── 01_Scenes/
 │   └── Template Scene.unity
 ├── 02_Scripts/
-│   ├── Controller/
-│   ├── Data/
-│   ├── Event/
-│   ├── Factory/
-│   ├── Model/
-│   ├── Policy/
-│   ├── Repository/
-│   ├── View/
-│   │   ├── UI/
-│   │   └── World/
-│   └── ViewModel/
 ├── 03_Prefabs/
 ├── 04_Data/
 └── 05_Resources/
@@ -53,6 +42,16 @@ You can also detach that by pressing detach button.
 
 ## Scripts
 
+- Ore
+  - Lifecycle
+    - Local
+      - Entity
+      - System
+      - View
+      - Visible
+    - LifecycleState
+    - Model
+  - Bootstrapper
 - Arc
   - Framework
     - ArcSettings
