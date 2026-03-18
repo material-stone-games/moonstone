@@ -7,24 +7,22 @@ namespace Moonstone.Ore
     {
         protected override void OnInitialize()
         {
-            StartCoroutine(InitializeRoutine());
+            BindObjects();
+            InitializeObjects();
         }
 
-        private IEnumerator InitializeRoutine()
+        private void Start()
         {
             CreateObjects();
-            InitializeObjects();
-            BindObjects();
-            SetUpObjects();
-            yield break;
+            PrepareObjects();
         }
-
-        protected abstract void CreateObjects();
 
         protected abstract void BindObjects();
 
         protected abstract void InitializeObjects();
 
-        protected abstract void SetUpObjects();
+        protected abstract void CreateObjects();
+
+        protected abstract void PrepareObjects();
     }
 }
