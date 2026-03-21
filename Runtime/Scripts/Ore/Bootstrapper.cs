@@ -7,13 +7,13 @@ namespace Moonstone.Ore
     {
         protected override void OnInitialize()
         {
-            BindObjects();
+            CreateObjects();
             InitializeObjects();
         }
 
         private void Start()
         {
-            CreateObjects();
+            BindObjects();
             PrepareObjects();
         }
 
