@@ -47,8 +47,13 @@ namespace Moonstone.Ore
 
         public void Bind()
         {
-            foreach (var bindee in injectees)
-                InjectIntoObject(bindee);
+            foreach (var injectee in injectees)
+                InjectIntoObject(injectee);
+        }
+
+        public void Inject(object injectee)
+        {
+            InjectIntoObject(injectee);
         }
 
         private void InjectIntoObject(object target)
