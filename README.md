@@ -52,6 +52,7 @@ You can also detach that by pressing detach button.
     - LifecycleState
     - Model
   - Bootstrapper
+  - Container
 
 - Arc
   - Framework

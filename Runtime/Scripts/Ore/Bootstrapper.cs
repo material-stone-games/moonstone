@@ -9,11 +9,11 @@ namespace Moonstone.Ore
         {
             CreateObjects();
             InitializeObjects();
+            BindObjects();
         }
 
         private void Start()
         {
-            BindObjects();
             PrepareObjects();
         }
 
