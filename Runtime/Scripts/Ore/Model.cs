@@ -6,8 +6,8 @@ namespace Moonstone.Ore
 
         public string Id => id;
 
-        public Model(string id) => this.id = id;
+        public Model(string id) => this.id = id ?? System.Guid.NewGuid().ToString();
 
-        public Model() : this(System.Guid.NewGuid().ToString()) { }
+        public static string NewId() => System.Guid.NewGuid().ToString();
     }
 }
