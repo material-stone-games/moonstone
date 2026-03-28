@@ -50,7 +50,7 @@ You can also detach that by pressing detach button.
       - View
       - Visible
     - LifecycleState
-    - Model
+  - Model
   - Bootstrapper
   - Container
 
