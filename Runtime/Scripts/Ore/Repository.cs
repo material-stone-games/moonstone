@@ -22,6 +22,9 @@ namespace Moonstone.Ore
             return model;
         }
 
+        public bool TryFindById(string id, out TModel aggregate)
+            => aggregates.TryGetValue(id, out aggregate);
+
         public IReadOnlyCollection<TModel> FindAll()
         {
             return aggregates.Values;
