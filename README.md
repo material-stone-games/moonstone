@@ -51,6 +51,7 @@ You can also detach that by pressing detach button.
       - Visible
     - LifecycleState
   - Model
+  - Repository
   - Bootstrapper
   - Container
 
