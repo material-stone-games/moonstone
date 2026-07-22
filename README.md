@@ -90,7 +90,23 @@ Bootstrapper initializes scene components through LifecycleRunner.InitializeHier
 
 - D3
   - Application
+    - ICommand
+    - ICommandHandler
+    - IQuery
+    - IQueryHandler
+    - IDomainEventPublisher
+    - IUnitOfWork
+    - Result
+    - IMapper
+    - IParameterizedMapper
   - Domain
-  - Infrastructure
-  - Presentation
-  - Container
+    - Entity
+    - AggregateRoot
+    - DomainEvent
+    - ValueObject
+    - IRepository
+    - DomainException
+
+D3 provides DDD and application-layer primitives.
+It does not own bootstrapping, dependency injection, scene injection, or event bus infrastructure.
+D3 Domain and Application assemblies do not reference Arc or UnityEngine.
