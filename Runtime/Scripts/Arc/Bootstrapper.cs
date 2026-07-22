@@ -1,107 +1,111 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Moonstone.Arc.Events;
+using Moonstone.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Moonstone.Arc
 {
-    public class ArcSettingsNotFoundException : System.Exception
-    {
-        public ArcSettingsNotFoundException() : base("ArcSettings ScriptableObject not found in the project.") { }
-    }
-    public class BootstrapperPrefabNotFoundException : System.Exception
-    {
-        public BootstrapperPrefabNotFoundException() : base("BootstrapperPrefab is not set in ArcSettings.") { }
-    }
-
     public abstract class Bootstrapper : MonoBehaviour
     {
-        private static bool _isInstalled = false;
+        private static Bootstrapper _active;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void OnAfterSceneLoad()
-        {
-            try
-            {
-                _isInstalled = false;
+        [SerializeField] private bool persistentAcrossScenes = false;
 
-                var arcSettings = FindArcSettingsAsset();
-
-                if (!arcSettings.Enabled) return;
-                ValidateBootstrapperPrefab(arcSettings);
-
-                var bootstrapper = CreateBootstrapper(arcSettings);
-                InstallBootstrapper(bootstrapper);
-
-                _isInstalled = true;
-            }
-            catch (ArcSettingsNotFoundException ex)
-            {
-                Debug.LogException(ex);
-            }
-            catch (BootstrapperPrefabNotFoundException ex)
-            {
-                Debug.LogException(ex);
-            }
-        }
-
-        private static Framework.ArcSettings FindArcSettingsAsset()
-        {
-            var guids = UnityEditor.AssetDatabase.FindAssets("t:ArcSettings");
-            if (guids.Length > 0)
-            {
-                var path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                var settings = UnityEditor.AssetDatabase.LoadAssetAtPath<Framework.ArcSettings>(path);
-
-                if (settings != null)
-                    return settings;
-            }
-
-            throw new ArcSettingsNotFoundException();
-        }
-
-        private static void ValidateBootstrapperPrefab(Framework.ArcSettings settings)
-        {
-            if (settings.BootstrapperPrefab == null)
-                throw new BootstrapperPrefabNotFoundException();
-        }
-
-        private static Bootstrapper CreateBootstrapper(Framework.ArcSettings settings)
-        {
-            var bootstrapper = Instantiate(settings.BootstrapperPrefab);
-            DontDestroyOnLoad(bootstrapper);
-            return bootstrapper;
-        }
-
-        private static void InstallBootstrapper(Bootstrapper bootstrapper)
-        {
-            var installer = new Framework.Installer(bootstrapper);
-            var rootObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
-            installer.Install(rootObjects);
-        }
+        private GameObject[] _rootObjects = Array.Empty<GameObject>();
+        private bool _isBootstrapped;
+        private bool _isDisposing;
 
         private async void Start()
         {
-            if (!_isInstalled) return;
-
-            BindObjects();
-            Container.BindEachOther();
-            InitializeObjects();
-            await CreateObjects();
-            PrepareObjects();
+            await BootstrapAsync();
         }
 
-        protected abstract void BindObjects();
-        protected abstract void InitializeObjects();
-        protected abstract Task CreateObjects();
-        protected abstract void PrepareObjects();
+        private async Task BootstrapAsync()
+        {
+            if (_isBootstrapped) return;
+
+            if (_active != null && _active != this)
+            {
+                Debug.LogWarning($"Arc bootstrapper already exists: {_active.name}. Skipping {name}.");
+                return;
+            }
+
+            _active = this;
+            _isBootstrapped = true;
+
+            if (persistentAcrossScenes)
+                DontDestroyOnLoad(gameObject);
+
+            _rootObjects = GetSceneRootObjects();
+
+            try
+            {
+                Configure();
+                ConfigureDefaultServices();
+                Container.BindEachOther();
+
+                var sceneInjector = new DependencyInjection.SceneInjector(this, Container.Resolver);
+                sceneInjector.Inject(_rootObjects);
+
+                Initialize();
+                await LifecycleRunner.InitializeHierarchyAsync(_rootObjects);
+
+                await StartAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
+        private GameObject[] GetSceneRootObjects()
+        {
+            var roots = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects());
+            if (!roots.Contains(gameObject))
+                roots.Add(gameObject);
+
+            return roots.ToArray();
+        }
+
+        protected virtual void Configure() { }
+
+        private void ConfigureDefaultServices()
+        {
+            if (!Container.TryResolve<IEventBus>(out _))
+                Container.Register<IEventBus>(new EventBus());
+        }
+
+        protected virtual void Initialize() { }
+
+        protected virtual Task StartAsync() => Task.CompletedTask;
 
         private void OnDestroy()
         {
-            DisposeObjects();
+            if (_active != this || _isDisposing) return;
 
-            EventDispatcher.Dispose();
-            Container.Dispose();
+            _isDisposing = true;
+
+            try
+            {
+                LifecycleRunner.DisposeHierarchy(_rootObjects);
+                Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                Container.Dispose();
+                _active = null;
+                _isBootstrapped = false;
+                _isDisposing = false;
+            }
         }
 
-        protected abstract void DisposeObjects();
+        protected virtual void Dispose() { }
     }
 }
