@@ -42,6 +42,14 @@ You can also detach that by pressing detach button.
 
 ## Scripts
 
+- Core
+  - Lifecycle
+    - IInitializable
+    - IAsyncInitializable
+    - ILifecycleDisposable
+    - LifecycleBehaviour
+    - LifecycleRunner
+
 - Ore
   - Lifecycle
     - Local
@@ -56,19 +64,24 @@ You can also detach that by pressing detach button.
   - Container
 
 - Arc
-  - Framework
-    - ArcSettings
-    - Installer
+  - DependencyInjection
+    - InjectAttribute
+    - IResolver
+    - SceneInjector
     - ServiceResolver
-  - View
-    - Scene
-    - View
+  - Events
+    - EventBus
+    - IEventBus
+    - EventSubscription
   - Bootstrapper
   - Container
-  - EventDispatcher
-  - Model
-  - Repository
-  - ViewModel
+
+Arc starts from a Bootstrapper component placed in the scene.
+Override Configure, Initialize, StartAsync, and Dispose to configure services and lifecycle flow.
+Register service instances in Configure with Container.Register.
+Arc supports [Inject] fields and [Inject] properties.
+Bootstrapper registers EventBus as IEventBus by default unless Configure registers a custom IEventBus first.
+Bootstrapper initializes scene components through LifecycleRunner.InitializeHierarchyAsync so sync and async lifecycle components share one initialization path.
 
 - Lapidary
   - View
