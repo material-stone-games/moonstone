@@ -25,32 +25,31 @@ namespace Moonstone.HierarchyCustomization
             EditorUtility.SetDirty(gameObject);
         }
 
-        public static void RenderSeparator(GameObject gameObject, Rect selectionRect, HierarchyCustomizationData.Separator customizedItemData)
+        public static void RenderSeparator(GameObject gameObject, Rect selectionRect, HierarchyCustomizationProfile.SeparatorProfile separatorProfile)
         {
-            if (customizedItemData == null) { return; }
+            if (separatorProfile == null || string.IsNullOrEmpty(separatorProfile.prefix)) { return; }
 
-            int prefixLength = customizedItemData.prefix.Length;
+            int prefixLength = separatorProfile.prefix.Length;
 
-            if (prefixLength <= 0) { return; }
             if (prefixLength >= gameObject.name.Length) { return; }
 
             #region Render Background
             RenderEditorBackground(selectionRect);
 
-            Color color = customizedItemData.backgroundColor;
-            bool enableGradient = customizedItemData.enableGradient;
-            var gradientAlignment = customizedItemData.gradientAlignment;
+            Color color = separatorProfile.backgroundColor;
+            bool enableGradient = separatorProfile.enableGradient;
+            var gradientAlignment = separatorProfile.gradientAlignment;
 
             RenderBackground(selectionRect, color, enableGradient, gradientAlignment);
             #endregion
 
             #region Render Text
             string text = gameObject.name[prefixLength..].Trim();
-            Font font = customizedItemData.font;
-            FontStyle fontStyle = customizedItemData.fontStyle;
-            Color fontColor = customizedItemData.fontColor;
-            int fontSize = customizedItemData.fontSize;
-            TextAnchor alignment = customizedItemData.alignment;
+            Font font = separatorProfile.font;
+            FontStyle fontStyle = separatorProfile.fontStyle;
+            Color fontColor = separatorProfile.fontColor;
+            int fontSize = separatorProfile.fontSize;
+            TextAnchor alignment = separatorProfile.alignment;
 
             RenderText(selectionRect, text, font, fontStyle, fontColor, fontSize, alignment);
             #endregion
@@ -101,8 +100,8 @@ namespace Moonstone.HierarchyCustomization
 
         static Texture2D CreateColorTexture(Rect rect, Color color, GradientAlignment alignment)
         {
-            int width = (int) rect.width;
-            int height = (int) rect.height;
+            int width = Mathf.Max(2, Mathf.CeilToInt(rect.width));
+            int height = Mathf.Max(1, Mathf.CeilToInt(rect.height));
 
             Texture2D texture2d = new Texture2D(width, height, TextureFormat.RGBA32, false);
 
