@@ -9,16 +9,16 @@ namespace Moonstone.Lapidated.View.UI
         public GameObject Content;
     }
 
-    public class Tab : Moonstone.Arc.View
+    public class Tab : MonoBehaviour
     {
-        [SerializeField] Transform buttonContainerTransform;
-        [SerializeField] Transform contentContainerTransform;
-        [SerializeField] int initialSelectedIndex;
+        [SerializeField] Transform buttonContainerTransform = default;
+        [SerializeField] Transform contentContainerTransform = default;
+        [SerializeField] int initialSelectedIndex = default;
 
         ButtonContentGroup[] buttonContentGroups;
         ButtonContentGroup selectedGroup;
 
-        protected override void Awake()
+        private void Awake()
         {
             if (buttonContainerTransform.childCount != contentContainerTransform.childCount)
             {
