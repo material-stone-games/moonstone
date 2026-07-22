@@ -1,6 +1,6 @@
 {
     "name": "com.materialstone.moonstone",
-    "version": "0.11.0",
+    "version": "0.11.1",
     "displayName": "Moonstone",
     "description": "간편하고 빠르게 Unity 프로젝트의 기본 구성을 만들 수 있도록 돕는 유니티 패키지입니다.",
     "unity": "2023.1",
