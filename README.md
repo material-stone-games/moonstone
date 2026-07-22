@@ -27,13 +27,13 @@ Unity Package Manager에서 다음 방식 중 하나로 추가합니다.
 Unity 메뉴에서 `Window > Moonstone > Project Setup`을 엽니다.
 
 `Apply` 버튼을 누르면 패키지의 `Templates/ProjectStructure` 내용이 현재 프로젝트의 `Assets` 폴더로 복사됩니다.
+기존 파일과 충돌하는 경우 확인 창에서 진행 여부를 선택합니다.
 
 적용 후 기본 구조는 다음과 같습니다.
 
 ```txt
 Assets/
 +-- 01_Scenes/
-|   +-- Template Scene.unity
 +-- 02_Scripts/
 +-- 03_Prefabs/
 +-- 04_Data/
@@ -100,7 +100,9 @@ public sealed class PlayerPresenter : MonoBehaviour
 
 - 메뉴: `Window > Moonstone > Project Setup`
 - 역할: 패키지에 포함된 프로젝트 구조 템플릿을 `Assets` 폴더에 복사합니다.
-- 기존 파일과 같은 경로가 있으면 템플릿 파일로 덮어씁니다.
+- 기존 파일과 같은 경로가 있으면 확인 후 덮어씁니다.
+- 복사 중 오류가 발생하면 이번 적용에서 만든 파일과 덮어쓴 파일을 되돌립니다.
+- `Create Scene Hierarchy` 버튼은 현재 열린 씬에 `Core`, `World`, `UI` 루트 구조의 게임 오브젝트 양식을 추가합니다.
 
 ### Hierarchy Customization
 
