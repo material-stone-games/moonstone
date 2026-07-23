@@ -18,7 +18,7 @@ namespace Moonstone
         string statusMessage;
         MessageType statusType = MessageType.Info;
 
-        [MenuItem("Window/Moonstone/Project Setup")]
+        [MenuItem("Tools/Moonstone/Project Setup")]
         public static void ShowWindow()
         {
             GetWindow<SetupWindow>("Project Setup");
