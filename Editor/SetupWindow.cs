@@ -72,7 +72,7 @@ namespace Moonstone
 
             GUILayout.Space(16);
             GUILayout.Label("Scene Hierarchy Template", EditorStyles.boldLabel);
-            GUILayout.Label("Adds Core, World, and UI hierarchy groups to the currently open scene.", EditorStyles.wordWrappedLabel);
+            GUILayout.Label("Adds Core and UI hierarchy groups to the currently open scene.", EditorStyles.wordWrappedLabel);
             GUILayout.Space(10);
 
             if (GUILayout.Button("Create Scene Hierarchy"))
@@ -164,7 +164,7 @@ namespace Moonstone
                 return;
             }
 
-            List<string> existingRoots = FindExistingRootObjects("Core", "World", "UI");
+            List<string> existingRoots = FindExistingRootObjects("Core", "UI");
             if (existingRoots.Count > 0 && !ConfirmDuplicateHierarchy(existingRoots))
             {
                 SetStatus("Scene hierarchy creation was canceled. Current scene was not changed.", MessageType.Warning);
@@ -182,7 +182,7 @@ namespace Moonstone
                 Undo.CollapseUndoOperations(undoGroup);
 
                 SetStatus(
-                    "Scene hierarchy created in the current scene.\nHierarchy: Core, World, UI",
+                    "Scene hierarchy created in the current scene.\nHierarchy: Core, UI",
                     MessageType.Info);
                 Debug.Log("Scene hierarchy created in the current scene.");
             }
@@ -207,19 +207,6 @@ namespace Moonstone
             CreateChild(core.transform, "Bootstrapper", createdObjects);
             CreateChild(core.transform, "Systems", createdObjects);
             CreateChild(core.transform, "Services", createdObjects);
-
-            GameObject world = CreateRoot("World", createdObjects);
-            GameObject cameraRig = CreateChild(world.transform, "Camera Rig", createdObjects);
-            GameObject mainCamera = CreateChild(cameraRig.transform, "Main Camera", createdObjects, typeof(Camera), typeof(AudioListener));
-            mainCamera.tag = "MainCamera";
-            mainCamera.transform.position = new Vector3(0f, 1f, -10f);
-
-            GameObject lighting = CreateChild(world.transform, "Lighting", createdObjects);
-            GameObject directionalLight = CreateChild(lighting.transform, "Directional Light", createdObjects, typeof(Light));
-            directionalLight.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
-            directionalLight.GetComponent<Light>().type = LightType.Directional;
-
-            CreateChild(world.transform, "Environment", createdObjects);
 
             GameObject ui = CreateRoot("UI", createdObjects);
             GameObject canvas = CreateChild(ui.transform, "Canvas", createdObjects);

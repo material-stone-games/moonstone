@@ -102,7 +102,7 @@ public sealed class PlayerPresenter : MonoBehaviour
 - 역할: 패키지에 포함된 프로젝트 구조 템플릿을 `Assets` 폴더에 복사합니다.
 - 기존 파일과 같은 경로가 있으면 확인 후 덮어씁니다.
 - 복사 중 오류가 발생하면 이번 적용에서 만든 파일과 덮어쓴 파일을 되돌립니다.
-- `Create Scene Hierarchy` 버튼은 현재 열린 씬에 `Core`, `World`, `UI` 루트 구조의 게임 오브젝트 양식을 추가합니다.
+- `Create Scene Hierarchy` 버튼은 현재 열린 씬에 `Core`, `UI` 루트 구조의 게임 오브젝트 양식을 추가합니다.
 
 ### Hierarchy Customization
 
