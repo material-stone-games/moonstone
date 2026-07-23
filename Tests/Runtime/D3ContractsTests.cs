@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Moonstone.D3.Application;
 using Moonstone.D3.Domain;
 using NUnit.Framework;
@@ -60,46 +59,6 @@ namespace Moonstone.Tests.Runtime
             Assert.That(result.ErrorCode, Is.EqualTo("validation"));
             Assert.That(result.ErrorMessage, Is.EqualTo("first"));
             Assert.That(result.Errors, Is.EqualTo(new[] { "first", "second" }));
-        }
-
-        private sealed class TestEntity : Entity<string>
-        {
-            public TestEntity(string id) : base(id) { }
-        }
-
-        private sealed class OtherTestEntity : Entity<string>
-        {
-            public OtherTestEntity(string id) : base(id) { }
-        }
-
-        private sealed class TestAggregate : Aggregate
-        {
-            public TestAggregate(string id) : base(id) { }
-
-            public void Raise(IDomainEvent domainEvent)
-            {
-                AddEvent(domainEvent);
-            }
-        }
-
-        private sealed class TestDomainEvent : DomainEvent { }
-
-        private sealed class TestValueObject : ValueObject
-        {
-            private readonly string _key;
-            private readonly int[] _values;
-
-            public TestValueObject(string key, int[] values)
-            {
-                _key = key;
-                _values = values;
-            }
-
-            protected override IEnumerable<object> GetEqualityComponents()
-            {
-                yield return _key;
-                yield return _values;
-            }
         }
     }
 }
