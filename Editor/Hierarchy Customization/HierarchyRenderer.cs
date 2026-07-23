@@ -25,7 +25,7 @@ namespace Moonstone.HierarchyCustomization
             EditorUtility.SetDirty(gameObject);
         }
 
-        public static void RenderSeparator(GameObject gameObject, Rect selectionRect, HierarchyCustomizationProfile.SeparatorProfile separatorProfile)
+        public static void RenderSeparator(GameObject gameObject, Rect selectionRect, SeparatorProfile separatorProfile)
         {
             if (separatorProfile == null || string.IsNullOrEmpty(separatorProfile.prefix)) { return; }
 

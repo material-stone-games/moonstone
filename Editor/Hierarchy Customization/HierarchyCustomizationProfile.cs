@@ -14,20 +14,6 @@ namespace Moonstone.HierarchyCustomization
         public bool enableSeparator = true;
         public bool enableTree = true;
 
-        [Serializable]
-        public class SeparatorProfile
-        {
-            public string prefix = "#";
-            public bool enableGradient;
-            public GradientAlignment gradientAlignment;
-            public Color backgroundColor = Color.black;
-            public Font font;
-            public FontStyle fontStyle = FontStyle.Normal;
-            public Color fontColor = Color.white;
-            public int fontSize = 12;
-            public TextAnchor alignment = TextAnchor.MiddleLeft;
-        }
-
         [FormerlySerializedAs("separatorList")]
         public SeparatorProfile[] separators = {
             new() { prefix = "#1", backgroundColor = new Color(0.4f, 0.078125f, 0.078125f), alignment = TextAnchor.MiddleCenter },

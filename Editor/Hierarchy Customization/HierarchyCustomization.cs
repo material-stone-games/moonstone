@@ -5,8 +5,6 @@ using UnityEngine;
 
 namespace Moonstone.HierarchyCustomization
 {
-    using SeparatorProfile = HierarchyCustomizationProfile.SeparatorProfile;
-
     [InitializeOnLoad]
     public static class HierarchyCustomization
     {
