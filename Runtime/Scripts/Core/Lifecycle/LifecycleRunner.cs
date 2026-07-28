@@ -65,7 +65,9 @@ namespace Moonstone.Core
         {
             if (transform == null || !visitedTransforms.Add(transform)) return;
 
-            transform.GetComponents(components);
+            var localComponents = new List<MonoBehaviour>();
+            transform.GetComponents(localComponents);
+            components.AddRange(localComponents);
 
             for (int i = 0; i < transform.childCount; i++)
                 CollectComponents(transform.GetChild(i), components, visitedTransforms);
