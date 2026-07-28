@@ -50,8 +50,8 @@ namespace Moonstone.Arc
                 var sceneInjector = new DependencyInjection.SceneInjector(this, Container.Resolver);
                 sceneInjector.Inject(_rootObjects);
 
-                Initialize();
                 await LifecycleRunner.InitializeHierarchyAsync(_rootObjects);
+                Initialize();
 
                 await StartAsync();
             }
