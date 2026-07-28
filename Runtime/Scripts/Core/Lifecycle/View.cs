@@ -6,18 +6,6 @@ namespace Moonstone.Core
     {
         protected RectTransform rectTransform;
 
-        protected virtual void Awake()
-        {
-            if (!IsInitialized)
-                Initialize();
-        }
-
-        protected virtual void OnDestroy()
-        {
-            if (!IsDisposed)
-                Dispose();
-        }
-
         protected override void OnInitialize()
             => TryGetComponent(out rectTransform);
 
